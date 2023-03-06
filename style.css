@@ -1,0 +1,29 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin-left: 64px;
+    margin-right: 64px;
+    max-width: 860px;
+}
+
+img {
+    height: 3em;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+@media screen and (max-width: 580px) {
+    body {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+}
+
+@media print {
+    body {
+        margin: .5in .5in .5in .5in;
+    }
+    
+    img {
+        display: none;
+    }
+}
