@@ -20,7 +20,7 @@ img {
 
 @media print {
     body {
-        margin: .5in .5in .5in .5in;
+        margin: 1in;
     }
     
     img {
