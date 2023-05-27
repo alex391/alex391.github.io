@@ -16,7 +16,7 @@
 ## Activities
 - Penfield High School FIRST Robotics Competition Team 1511 Rolling Thunder &mdash; 2016&ndash;2020.
     - Over 1,000 hours over 4 years.
-    - Built and Android app with Java and Android Studio that allowed the team to gather and analyze data to better understand our competition.
+    - Built an Android app with Java and Android Studio that allowed the team to gather and analyze data to better understand our competition.
 - Eagle Scout &mdash; Boy Scout Troop 312 &mdash; awarded November 26, 2019.
 
 ## Work Experience
