@@ -3,13 +3,49 @@ body {
     margin-left: 64px;
     margin-right: 64px;
     max-width: 860px;
+    background-color: #1f1f1f;
+    color: #ddd;
 }
 
-img {
-    height: 3em;
+a:link {
+    color: skyblue;
+}
+
+a:visited {
+    color: rgb(0, 212, 106);
+}
+
+a:hover {
+    text-shadow: 0 0 5px;
+    /* glow effect inspired by adventofcode.com */
+}
+
+a:active {
+    text-shadow: 0 0 7px;
+    /* just a bit more glow */
+}
+
+#print {
+    height: 50px;
     cursor: pointer;
     margin-top: 16px;
+    padding: 1em;
+    border: solid 2px #808080;
+    border-radius: 10px;
 }
+
+#print:hover {
+    box-shadow: 0 0 5px;
+}
+
+#print:active {
+    box-shadow: 0 0 7px;
+}
+
+a {
+    text-decoration: none;
+}
+
 
 @media screen and (max-width: 580px) {
     body {
@@ -19,11 +55,27 @@ img {
 }
 
 @media print {
+
+    /* Change the back to black text on a white background, hide the print button, and make all the links blue and underlined. */
     body {
         margin: 1in;
+        color: black;
+        background-color: white;
     }
-    
+
+    a {
+        text-decoration: underline;
+    }
+
     img {
         display: none;
+    }
+
+    a:link {
+        color: #0000ee;
+    }
+
+    a:visited {
+        color: #0000ee;
     }
 }
