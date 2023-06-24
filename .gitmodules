@@ -1,0 +1,3 @@
+[submodule "languagetool-html"]
+	path = languagetool-html
+	url = https://github.com/alex391/languagetool-html.git
