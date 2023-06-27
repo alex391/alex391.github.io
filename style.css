@@ -58,9 +58,14 @@ a {
 
     /* Change the back to black text on a white background, hide the print button, and make all the links blue and underlined. */
     body {
-        margin: 1in;
         color: black;
         background-color: white;
+        margin: 0;
+    }
+
+    h1, h2, ul {
+        margin-top: 0;
+        margin-bottom: 1rem;
     }
 
     a {
