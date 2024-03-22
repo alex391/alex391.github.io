@@ -57,6 +57,10 @@ a:active {
     }
 }
 
+ul {
+    list-style-type: none;
+}
+
 @media print {
 
     /* Change the back to black text on a white background, and make all the links blue and underlined. */
