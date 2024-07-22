@@ -2,8 +2,8 @@ body {
     font-family: 'Roboto', sans-serif;
     margin-left: 64px;
     margin-right: 64px;
-    background-color: #1f1f1f;
-    color: #ddd;
+    background-color:  black;
+    color: white;
     text-align: center;
     display: flex;
     flex-direction: column;
