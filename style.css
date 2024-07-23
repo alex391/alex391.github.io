@@ -12,6 +12,7 @@ body {
     height: 100vh;
     margin-top: 0;
     margin-bottom: 0;
+    overflow: hidden; /* need to hide the stars that fall off the edge so that the viewport doesn't get bigger */
 }
 
 #black-background {
@@ -65,8 +66,6 @@ a:active {
 }
 
 .star {
-    width: 10px;
-    height: 10px;
     border-radius: 50%;
     box-shadow: 0 0 5px;
 }
