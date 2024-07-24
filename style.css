@@ -71,12 +71,6 @@ a:active {
     z-index: -1;
 }
 
-@media screen and (max-width: 580px) {
-    body {
-        margin-left: 16px;
-        margin-right: 16px;
-    }
-}
 
 @media print {
 
@@ -98,4 +92,17 @@ a:active {
     a:visited {
         color: #0000ee;
     }
+    
+    .star {
+        visibility: hidden;
+    }
+    
+    #back {
+        visibility: hidden;
+    }
+
+    #black-background {
+        visibility: hidden;
+    }
+
 }
