@@ -37,12 +37,13 @@ a {
     text-decoration: none;
 }
 
-.back {
+#back {
     font-size: 2em;
     position: absolute;
     top: 0;
     left: 0;
     text-align: center;
+    background-color: rgba(0, 0, 0, .8);
 }
 
 a:link {
@@ -67,7 +68,7 @@ a:active {
 
 .star {
     border-radius: 50%;
-    box-shadow: 0 0 5px;
+    z-index: -1;
 }
 
 @media screen and (max-width: 580px) {
