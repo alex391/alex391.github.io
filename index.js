@@ -60,7 +60,7 @@ function randomColorInRange(a, b, c, normal = true) {
 
 
 function calcNumberOfStars() {
-    const idealStars = Math.round(($(window).height() * $(window).width()) * .0007)
+    const idealStars = Math.round(($(window).height() * $(window).width()) * .001)
     const MAX = 2200;
     return Math.min(idealStars, MAX)
 }
@@ -77,14 +77,14 @@ function drawStars() {
         star.style.left = (Math.random() * 100) + "%";
         star.style.top = (Math.random() * 100) + "%";
 
+        const brightness = Math.random();
         const starColor = randomColorInRange([74, 118, 216], [255, 255, 255], [225, 230, 12])
-
-        star.style.background = `rgb(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}`;
+        star.style.background = `rgba(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}, ${brightness})`;
+        star.style.boxShadow = `0 0 5px rgba(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}, ${brightness})`;
 
         const diameter = randnBm() * MAX_DIAMETER + "px";
         star.style.height = diameter
         star.style.width = diameter;
-        star.style.boxShadow = `0 0 5px rgb(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}`;
 
         star.classList.add("star");
         wrapper.append(star);
@@ -107,7 +107,7 @@ drawStars();
 
 $(window).on("resize", () => {
     const correctNumberOfStars = calcNumberOfStars();
-    if (numberOfStars < (correctNumberOfStars / 2) || numberOfStars > (correctNumberOfStars * 2)) {
+    if (numberOfStars < (correctNumberOfStars / 1.5) || numberOfStars > (correctNumberOfStars * 1.5)) {
         $(".star").remove();
         drawStars();
         numberOfStars = correctNumberOfStars;
