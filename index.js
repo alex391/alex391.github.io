@@ -70,6 +70,7 @@ let numberOfStars = calcNumberOfStars();
 function drawStars() {
     const MAX_DIAMETER = 5;
 
+    const wrapper = $("#wrapper");
     for (let i = 0; i < numberOfStars; i++) {
         const star = document.createElement("span");
         star.style.position = "absolute";
@@ -86,7 +87,7 @@ function drawStars() {
         star.style.boxShadow = `0 0 5px rgb(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}`;
 
         star.classList.add("star");
-        document.body.appendChild(star);
+        wrapper.append(star);
     }
 
 }

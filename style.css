@@ -14,10 +14,16 @@ body {
     margin-bottom: 0;
 }
 
-#wrapper, body {
+#wrapper {
     /* need to hide the stars that fall off the edge so that the viewport doesn't get bigger */
     /* thanks to https://stackoverflow.com/a/14271049 */
-    overflow: hidden; 
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    z-index: -2;
 }
 
 #black-background {
