@@ -12,7 +12,12 @@ body {
     height: 100vh;
     margin-top: 0;
     margin-bottom: 0;
-    overflow: hidden; /* need to hide the stars that fall off the edge so that the viewport doesn't get bigger */
+}
+
+#wrapper, body {
+    /* need to hide the stars that fall off the edge so that the viewport doesn't get bigger */
+    /* thanks to https://stackoverflow.com/a/14271049 */
+    overflow: hidden; 
 }
 
 #black-background {
