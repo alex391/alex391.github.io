@@ -72,8 +72,11 @@ const MAX_DIAMETER = 5;
 
 function createStar() {
     const star = document.createElement("span");
+    const hitbox = document.createElement("span");
     star.style.left = (Math.random() * 100) + "%";
     star.style.top = (Math.random() * 100) + "%";
+    hitbox.style.top = star.style.top;
+    hitbox.style.left = star.style.left;
 
     const brightness = Math.random();
     const starColor = randomColorInRange([74, 118, 216], [255, 255, 255], [225, 230, 12])
@@ -85,21 +88,23 @@ function createStar() {
     star.style.width = diameter;
 
     star.classList.add("star");
+    hitbox.classList.add("hitbox")
 
-    $(star).on("mousedown", { star: star }, explode);
+    $(hitbox).on("mousedown", { star: star, hitbox: hitbox }, explode);
     setTimeout(() => {
-        explode({data: {star : star}});
+        explode({ data: { star: star, hitbox: hitbox } });
     }, randnBm() * 2 * 22 * 60 * 1000); // https://store.steampowered.com/app/753640/Outer_Wilds/
-    return star;
+    return { star: star, hitbox: hitbox };
 }
 
 let numberOfStars = calcNumberOfStars();
 
 function drawStars() {
-    const wrapper = $(document.body);
+    const wrapper = $("#wrapper");
     for (let i = 0; i < numberOfStars; i++) {
-        const star = createStar();
+        const { star, hitbox } = createStar();
         wrapper.append(star);
+        wrapper.append(hitbox);
     }
 
 }
@@ -117,7 +122,7 @@ function explode(event) {
     const explosionDistance = 20;
     for (let i = 0; i < numberOfExplosionParticles; i++) {
         const particle = star.clone().css("height", "1px").css("width", "1px");
-        $(document.body).append(particle);
+        $("#wrapper").append(particle);
         const top = parseInt(particle.css("top")) + getRandomArbitrary(-explosionDistance, explosionDistance)
         const left = parseInt(particle.css("left")) + getRandomArbitrary(-explosionDistance, explosionDistance)
         particle.animate({
@@ -126,10 +131,11 @@ function explode(event) {
         }, 1000, "linear", function () {
             setTimeout(() => {
                 $(this).remove();
-            }, getRandomArbitrary(0,200))
+            }, getRandomArbitrary(0, 200))
         });
     }
     star.remove();
+    $(event.data.hitbox).remove();
 }
 
 // Act on press

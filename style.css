@@ -80,8 +80,16 @@ a:active {
 .star {
     border-radius: 50%;
     position: absolute;
-
+    font-size: 0;
 }
+
+.hitbox {
+    padding: 10px;
+    position: absolute;
+    transform: translate(-10px, -10px); /* close enough! */
+}
+
+
 
 
 @media print {
