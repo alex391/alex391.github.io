@@ -1,7 +1,10 @@
 "use strict";
 
+//FIXME: I've reintroduced a bug! There can sometimes be a scroll
+
 function randnBm() {
     // Thanks to https://stackoverflow.com/a/49434653
+    // generate number between 0 and 1, where .5 is most likely
     let u = 0, v = 0;
     while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
     while (v === 0) v = Math.random();
@@ -65,31 +68,68 @@ function calcNumberOfStars() {
     return Math.min(idealStars, MAX)
 }
 
+const MAX_DIAMETER = 5;
+
+function createStar() {
+    const star = document.createElement("span");
+    star.style.left = (Math.random() * 100) + "%";
+    star.style.top = (Math.random() * 100) + "%";
+
+    const brightness = Math.random();
+    const starColor = randomColorInRange([74, 118, 216], [255, 255, 255], [225, 230, 12])
+    star.style.background = `rgba(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}, ${brightness})`;
+    star.style.boxShadow = `0 0 5px rgba(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}, ${brightness})`;
+
+    const diameter = randnBm() * MAX_DIAMETER + "px";
+    star.style.height = diameter
+    star.style.width = diameter;
+
+    star.classList.add("star");
+
+    $(star).on("mousedown", { star: star }, explode);
+    setTimeout(() => {
+        explode({data: {star : star}});
+    }, randnBm() * 2 * 22 * 60 * 1000); // https://store.steampowered.com/app/753640/Outer_Wilds/
+    return star;
+}
+
 let numberOfStars = calcNumberOfStars();
 
 function drawStars() {
-    const MAX_DIAMETER = 5;
-
-    const wrapper = $("#wrapper");
+    const wrapper = $(document.body);
     for (let i = 0; i < numberOfStars; i++) {
-        const star = document.createElement("span");
-        star.style.position = "absolute";
-        star.style.left = (Math.random() * 100) + "%";
-        star.style.top = (Math.random() * 100) + "%";
-
-        const brightness = Math.random();
-        const starColor = randomColorInRange([74, 118, 216], [255, 255, 255], [225, 230, 12])
-        star.style.background = `rgba(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}, ${brightness})`;
-        star.style.boxShadow = `0 0 5px rgba(${starColor.color[0]}, ${starColor.color[1]}, ${starColor.color[2]}, ${brightness})`;
-
-        const diameter = randnBm() * MAX_DIAMETER + "px";
-        star.style.height = diameter
-        star.style.width = diameter;
-
-        star.classList.add("star");
+        const star = createStar();
         wrapper.append(star);
     }
 
+}
+
+function getRandomArbitrary(min, max) {
+    // Thanks MDN
+    return Math.random() * (max - min) + min;
+}
+
+function explode(event) {
+    // "Mission: Science compels us to explode the sun!"
+    //                                            -- Pye
+    const star = $(event.data.star);
+    const numberOfExplosionParticles = 20;
+    const explosionDistance = 20;
+    for (let i = 0; i < numberOfExplosionParticles; i++) {
+        const particle = star.clone().css("height", "1px").css("width", "1px");
+        $(document.body).append(particle);
+        const top = parseInt(particle.css("top")) + getRandomArbitrary(-explosionDistance, explosionDistance)
+        const left = parseInt(particle.css("left")) + getRandomArbitrary(-explosionDistance, explosionDistance)
+        particle.animate({
+            top: top,
+            left: left
+        }, 1000, "linear", function () {
+            setTimeout(() => {
+                $(this).remove();
+            }, getRandomArbitrary(0,200))
+        });
+    }
+    star.remove();
 }
 
 // Act on press
@@ -113,3 +153,4 @@ $(window).on("resize", () => {
         numberOfStars = correctNumberOfStars;
     }
 });
+
