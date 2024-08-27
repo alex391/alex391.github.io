@@ -1,5 +1,7 @@
 "use strict";
 
+//FIXME: I've reintroduced a bug! There can sometimes be a scroll
+
 function randnBm() {
     // Thanks to https://stackoverflow.com/a/49434653
     // generate number between 0 and 1, where .5 is most likely
@@ -91,7 +93,7 @@ function createStar() {
     $(hitbox).on("mousedown", { star: star, hitbox: hitbox }, explode);
     setTimeout(() => {
         explode({ data: { star: star, hitbox: hitbox } });
-    }, randnBm() * 2 * 1 * 60 * 1000); // https://store.steampowered.com/app/753640/Outer_Wilds/
+    }, randnBm() * 2 * 22 * 60 * 1000); // https://store.steampowered.com/app/753640/Outer_Wilds/
     return { star: star, hitbox: hitbox };
 }
 
@@ -134,6 +136,7 @@ function explode(event) {
                 }, getRandomArbitrary(0, 200))
             });
         }
+
     }
     star.remove();
     $(event.data.hitbox).remove();
