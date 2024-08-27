@@ -118,21 +118,25 @@ function explode(event) {
     // "Mission: Science compels us to explode the sun!"
     //                                            -- Pye
     const star = $(event.data.star);
-    const numberOfExplosionParticles = 20;
-    const explosionDistance = 20;
-    for (let i = 0; i < numberOfExplosionParticles; i++) {
-        const particle = star.clone().css("height", "1px").css("width", "1px");
-        $("#wrapper").append(particle);
-        const top = parseInt(particle.css("top")) + getRandomArbitrary(-explosionDistance, explosionDistance)
-        const left = parseInt(particle.css("left")) + getRandomArbitrary(-explosionDistance, explosionDistance)
-        particle.animate({
-            top: top,
-            left: left
-        }, 1000, "linear", function () {
-            setTimeout(() => {
-                $(this).remove();
-            }, getRandomArbitrary(0, 200))
-        });
+    if (document.hasFocus() || event.buttons) {
+        const wrapper = $("#wrapper");
+        const numberOfExplosionParticles = 20;
+        const explosionDistance = 20;
+        for (let i = 0; i < numberOfExplosionParticles; i++) {
+            const particle = star.clone().css("height", "1px").css("width", "1px");
+            wrapper.append(particle);
+            const top = parseInt(particle.css("top")) + getRandomArbitrary(-explosionDistance, explosionDistance)
+            const left = parseInt(particle.css("left")) + getRandomArbitrary(-explosionDistance, explosionDistance)
+            particle.animate({
+                top: top,
+                left: left
+            }, 1000, "linear", function () {
+                setTimeout(() => {
+                    $(this).remove();
+                }, getRandomArbitrary(0, 200))
+            });
+        }
+
     }
     star.remove();
     $(event.data.hitbox).remove();
