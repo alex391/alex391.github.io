@@ -1,7 +1,5 @@
 "use strict";
 
-//FIXME: I've reintroduced a bug! There can sometimes be a scroll
-
 function randnBm() {
     // Thanks to https://stackoverflow.com/a/49434653
     // generate number between 0 and 1, where .5 is most likely
