@@ -66,7 +66,17 @@ function calcNumberOfStars() {
     return Math.min(idealStars, MAX)
 }
 
+
+const start = Date.now()
+const END_TIME = 22; // minutes, on average
+
+function timeLeft() {
+    const msSinceStart = Date.now() - start;
+    return (END_TIME * 60 * 1000) - msSinceStart;
+}
+
 const MAX_DIAMETER = 5;
+
 
 function createStar() {
     const star = document.createElement("span");
@@ -89,15 +99,20 @@ function createStar() {
     hitbox.classList.add("hitbox")
 
     $(hitbox).on("mousedown", { star: star, hitbox: hitbox }, explode);
+    const timeUntilSupernovaMs= (randnBm() * 2 * END_TIME * 60 * 1000) - timeLeft();
     setTimeout(() => {
         explode({ data: { star: star, hitbox: hitbox } });
-    }, randnBm() * 2 * 22 * 60 * 1000); // https://store.steampowered.com/app/753640/Outer_Wilds/
+    }, timeUntilSupernovaMs); // https://store.steampowered.com/app/753640/Outer_Wilds/
     return { star: star, hitbox: hitbox };
 }
 
 let numberOfStars = calcNumberOfStars();
+let starsExploded = 0;
 
 function drawStars() {
+    if(timeLeft() <= 0) {
+        return; // Don't bother drawing stars that need deleted immediately
+    }
     const wrapper = $("#wrapper");
     for (let i = 0; i < numberOfStars; i++) {
         const { star, hitbox } = createStar();
@@ -138,6 +153,7 @@ function explode(event) {
     }
     star.remove();
     $(event.data.hitbox).remove();
+    starsExploded++;
 }
 
 // Act on press
@@ -155,10 +171,11 @@ drawStars();
 
 $(window).on("resize", () => {
     const correctNumberOfStars = calcNumberOfStars();
+    const explodedRatio = (numberOfStars - starsExploded) / numberOfStars; // So that the star density doesn't increase 
     if (numberOfStars < (correctNumberOfStars / 1.5) || numberOfStars > (correctNumberOfStars * 1.5)) {
         $(".star").remove();
+        numberOfStars = Math.round(correctNumberOfStars * explodedRatio);
         drawStars();
-        numberOfStars = correctNumberOfStars;
     }
 });
 
