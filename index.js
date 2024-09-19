@@ -126,8 +126,8 @@ function explode(event) {
         for (let i = 0; i < numberOfExplosionParticles && particles <= maxParticles; i++, particles++) {
             const particle = star.clone().css("height", "1px").css("width", "1px");
             wrapper.append(particle);
-            const top = parseInt(particle.css("top")) + getRandomArbitrary(-explosionDistance, explosionDistance)
-            const left = parseInt(particle.css("left")) + getRandomArbitrary(-explosionDistance, explosionDistance)
+            const top = parseFloat(particle.css("top")) + getRandomArbitrary(-explosionDistance, explosionDistance)
+            const left = parseFloat(particle.css("left")) + getRandomArbitrary(-explosionDistance, explosionDistance)
             particle.animate({
                 top: top,
                 left: left
