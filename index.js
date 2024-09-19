@@ -112,6 +112,8 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+let particles = 0;
+
 function explode(event) {
     // "Mission: Science compels us to explode the sun!"
     //                                            -- Pye
@@ -119,8 +121,9 @@ function explode(event) {
     if (document.hasFocus() || event.buttons) {
         const wrapper = $("#wrapper");
         const numberOfExplosionParticles = 20;
+        const maxParticles = numberOfExplosionParticles * 5; // For lag
         const explosionDistance = 20;
-        for (let i = 0; i < numberOfExplosionParticles; i++) {
+        for (let i = 0; i < numberOfExplosionParticles && particles <= maxParticles; i++, particles++) {
             const particle = star.clone().css("height", "1px").css("width", "1px");
             wrapper.append(particle);
             const top = parseInt(particle.css("top")) + getRandomArbitrary(-explosionDistance, explosionDistance)
@@ -131,6 +134,7 @@ function explode(event) {
             }, 1000, "linear", function () {
                 setTimeout(() => {
                     $(this).remove();
+                    particles--;
                 }, getRandomArbitrary(0, 200))
             });
         }
