@@ -112,6 +112,10 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+function distance(x2, x1, y2, y1) {
+    return Math.hypot(x2 - x1, y2 - y1);
+}
+
 let particles = 0;
 
 function explode(event) {
@@ -126,8 +130,16 @@ function explode(event) {
         for (let i = 0; i < numberOfExplosionParticles && particles <= maxParticles; i++, particles++) {
             const particle = star.clone().css("height", "1px").css("width", "1px");
             wrapper.append(particle);
-            const top = parseFloat(particle.css("top")) + getRandomArbitrary(-explosionDistance, explosionDistance)
-            const left = parseFloat(particle.css("left")) + getRandomArbitrary(-explosionDistance, explosionDistance)
+            const startTop = parseFloat(particle.css("top"));
+            const startLeft = parseFloat(particle.css("left"));
+            let top;
+            let left;
+            let i = 0;
+            do {
+                top = startTop + getRandomArbitrary(-explosionDistance, explosionDistance)
+                left = startLeft + getRandomArbitrary(-explosionDistance, explosionDistance)
+                i++;
+            } while (distance(startTop, top, startLeft, left) >= explosionDistance && i < 10) // rejection sample to circular explosion (but max 10 tries)
             particle.animate({
                 top: top,
                 left: left
