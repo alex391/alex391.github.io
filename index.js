@@ -66,7 +66,7 @@ function calcNumberOfStars() {
     return Math.min(idealStars, MAX)
 }
 
-const MAX_DIAMETER = 5;
+const MAX_DIAMETER = 7;
 
 function createStar() {
     const star = document.createElement("span");
@@ -139,15 +139,15 @@ function explode(event) {
                 top = startTop + getRandomArbitrary(-explosionDistance, explosionDistance)
                 left = startLeft + getRandomArbitrary(-explosionDistance, explosionDistance)
                 i++;
-            } while (distance(startTop, top, startLeft, left) >= explosionDistance && i < 10) // rejection sample to circular explosion (but max 10 tries)
+            } while (distance(startTop, top, startLeft, left) > explosionDistance && i < 10) // rejection sample to circular explosion (but max 10 tries)
             particle.animate({
                 top: top,
                 left: left
-            }, 1000, "linear", function () {
+            }, getRandomArbitrary(700, 20000), "linear", function () {
                 setTimeout(() => {
                     $(this).remove();
                     particles--;
-                }, getRandomArbitrary(0, 200))
+                }, getRandomArbitrary(0, 500))
             });
         }
 
