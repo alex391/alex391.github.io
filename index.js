@@ -8,9 +8,13 @@ function randnBm() {
     while (v === 0) v = Math.random();
     let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
     num = num / 10.0 + 0.5; // Translate to 0 -> 1
-    if (num > 1 || num < 0) return randBm() // resample between 0 and 1
-    return num
+    if (num > 1 || num < 0) {
+        // This branch is *really* rare: about one in a million
+        return randnBm();
+    }
+    return num;
 }
+
 
 // Takes in thee colors given as arrays of [r, g, b]
 // and returns a color that's between a and c, where b is a midpoint color
