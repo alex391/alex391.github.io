@@ -95,7 +95,7 @@ function createStar() {
     $(hitbox).on("mousedown", { star: star, hitbox: hitbox }, explode);
     setTimeout(() => {
         explode({ data: { star: star, hitbox: hitbox } });
-    }, randnBm() * 2 * 22 * 60 * 1000); // https://store.steampowered.com/app/753640/Outer_Wilds/
+    }, Math.random() * 183 * 60 * 1000); // about every 5 seconds
     return { star: star, hitbox: hitbox };
 }
 
