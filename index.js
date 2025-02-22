@@ -1,5 +1,6 @@
 "use strict";
-
+const particleTimeouts = new Set();
+const starTimeouts = new Set();
 function randnBm() {
     // Thanks to https://stackoverflow.com/a/49434653
     // generate number between 0 and 1, where .5 is most likely
@@ -92,10 +93,18 @@ function createStar() {
     star.classList.add("star");
     hitbox.classList.add("hitbox")
 
-    $(hitbox).on("mousedown", { star: star, hitbox: hitbox }, explode);
-    setTimeout(() => {
-        explode({ data: { star: star, hitbox: hitbox } });
-    }, Math.random() * 183 * 60 * 1000); // about every 5 seconds
+    const timeout = 
+        setTimeout(() => {
+            explode({ data: { star: star, hitbox: hitbox } });
+            starTimeouts.delete(timeout);
+        }, Math.random() * 183 * 60 * 1000) // about every 5 seconds
+    starTimeouts.add(timeout);
+    $(hitbox).on("mousedown", { star: star, hitbox: hitbox }, (event) => {
+        clearTimeout(timeout);
+        starTimeouts.delete(timeout);
+        explode(event);
+    });
+
     return { star: star, hitbox: hitbox };
 }
 
@@ -132,7 +141,7 @@ function explode(event) {
         const maxParticles = numberOfExplosionParticles * 5; // For lag
         const explosionDistance = 20;
         for (let i = 0; i < numberOfExplosionParticles && particles <= maxParticles; i++, particles++) {
-            const particle = star.clone().css("height", "1px").css("width", "1px");
+            const particle = star.clone().css("height", "1px").css("width", "1px").addClass("particle");
             wrapper.append(particle);
             const startTop = parseFloat(particle.css("top"));
             const startLeft = parseFloat(particle.css("left"));
@@ -148,16 +157,43 @@ function explode(event) {
                 top: top,
                 left: left
             }, getRandomArbitrary(700, 20000), "linear", function () {
-                setTimeout(() => {
-                    $(this).remove();
-                    particles--;
-                }, getRandomArbitrary(0, 500))
+                const timeout =
+                    setTimeout(() => {
+                        $(this).remove();
+                        particles--;
+                        particleTimeouts.delete(timeout);
+                    }, getRandomArbitrary(0, 500));
+                particleTimeouts.add(timeout);
             });
         }
 
     }
     star.remove();
     $(event.data.hitbox).remove();
+}
+
+// Remove all stars and explosion particles, and clear all timeouts
+function removeStars() {
+    removeExplosionParticles();
+    for (const timeout of starTimeouts) {
+        clearTimeout(timeout);
+    }
+    starTimeouts.clear();
+    $(".star").remove();
+    $(".hitbox").remove();
+}
+
+// Remove all explosions
+function removeExplosionParticles() {
+    if (particles == 0) {
+        return;
+    }
+    for (const timeout of particleTimeouts) {
+        clearTimeout(timeout);
+    }
+    particleTimeouts.clear();
+    $(".particle").stop().remove();
+    particles = 0;
 }
 
 // Act on press
@@ -170,13 +206,16 @@ for (const link of links) {
     });
 }
 
+
 // Stars
 drawStars();
 
+
 $(window).on("resize", () => {
+    removeExplosionParticles();
     const correctNumberOfStars = calcNumberOfStars();
     if (numberOfStars < (correctNumberOfStars / 1.5) || numberOfStars > (correctNumberOfStars * 1.5)) {
-        $(".star").remove();
+        removeStars();
         drawStars();
         numberOfStars = correctNumberOfStars;
     }
