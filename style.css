@@ -87,6 +87,7 @@ a:active {
     padding: 10px;
     position: absolute;
     transform: translate(-10px, -10px); /* close enough! */
+    cursor: pointer;
 }
 
 
