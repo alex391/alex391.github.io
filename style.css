@@ -91,7 +91,7 @@ a:active {
 }
 
 #hide-cursor {
-    cursor: hidden;
+    cursor: none;
 }
 
 
