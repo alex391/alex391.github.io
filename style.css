@@ -90,6 +90,10 @@ a:active {
     cursor: pointer;
 }
 
+#hide-cursor {
+    cursor: hidden;
+}
+
 
 
 
