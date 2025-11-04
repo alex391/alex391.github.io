@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>date</title>
+    <script src="jquery-3.7.1.min.js"></script>
+    <style>
+        * {
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>US</h1>
+    <div id="us"></div>
+    <h2>in words</h2>
+    <div id="us-words"></div>
+    <h1>iso</h1>
+    <div id="iso"></div>
+    <h1>table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>month</th>
+                <th>number</th>
+                <th>season</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Jan</td>
+                <td>1</td>
+                <td>winter</td>
+            </tr>
+            <tr>
+                <td>Feb</td>
+                <td>2</td>
+                <td>winter</td>
+            </tr>
+            <tr>
+                <td>Mar</td>
+                <td>3</td>
+                <td>spring</td>
+            </tr>
+            <tr>
+                <td>Apr</td>
+                <td>4</td>
+                <td>spring</td>
+            </tr>
+            <tr>
+                <td>May</td>
+                <td>5</td>
+                <td>spring</td>
+            </tr>
+            <tr>
+                <td>Jun</td>
+                <td>6</td>
+                <td>summer</td>
+            </tr>
+            <tr>
+                <td>Jul</td>
+                <td>7</td>
+                <td>summer</td>
+            </tr>
+            <tr>
+                <td>Aug</td>
+                <td>8</td>
+                <td>summer</td>
+            </tr>
+            <tr>
+                <td>Sep</td>
+                <td>9</td>
+                <td>fall</td>
+            </tr>
+            <tr>
+                <td>Oct</td>
+                <td>10</td>
+                <td>fall</td>
+            </tr>
+            <tr>
+                <td>Nov</td>
+                <td>11</td>
+                <td>fall</td>
+            </tr>
+            <tr>
+                <td>Dec</td>
+                <td>12</td>
+                <td>winter</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Why hello there! This page just exists because I'm always confused
+        // about how the US date format works, and about month numbers
+        const date = new Date();
+        const usDateString = date.toLocaleDateString("en-US");
+        $("#us").html(usDateString);
+        $("#us-words").html(date.toDateString()); // .toDateString, conveniently, is written by Americans
+        $("#iso").html(date.toISOString().split("T")[0]);
+        $("title").html(date.toLocaleDateString());
+    </script>
+</body>
+
+</html>
